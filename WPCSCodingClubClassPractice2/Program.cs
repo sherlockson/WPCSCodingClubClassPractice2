@@ -10,38 +10,51 @@
      */
     public static void Main(string[] args)
     {
+        List<Airport> availableAirports = new List<Airport>();
+        List<Airplane> airplanes = new List<Airplane>();
+        Setup(airplanes, availableAirports);
+
+        while (true)
+        {
+            RunSimulation(airplanes, availableAirports);
+        }
+
+    }
+
+    public static void Setup(List<Airplane> airplanes, List<Airport> availableAirports)
+    {
         //Set the number of seats on the flight
         int seats = 60;
 
-        //A list of names for passengers
-        string[] names = new string[] { "Andrew", "Michael", "John", "Mary", "Richard", "Molly", "Emily", "David", "Travis", "Caroline" };
-
-        //Creating the airport
+        //Creating the airports
         Airport DallasFtWorth = new Airport("Dallas Ft Worth", 2);
         Airport Dayton = new Airport("Dayton", 2);
-        List<Airport> availableAirports = new List<Airport>();
         availableAirports.Add(Dayton);
         availableAirports.Add(DallasFtWorth);
-
-
 
         //Creating the airplane
         //Remember... These need to match the constructor we made in the Airplane class!
         Airplane AA4006 = new Airplane(4006, seats, "Embraer", "American", DallasFtWorth);
         Airplane UL7762 = new Airplane(7762, seats, "Boeing", "United", Dayton);
         Airplane DL811 = new Airplane(811, seats, "Airbus", "Delta", Dayton);
-        List<Airplane> airplanes = new List<Airplane>();
         airplanes.Add(AA4006);
         airplanes.Add(UL7762);
         airplanes.Add(DL811);
+    }
+
+    public static void RunSimulation(List<Airplane> airplanes, List<Airport> availableAirports)
+    {
+        //A list of names for passengers
+        string[] names = new string[] { "Andrew", "Michael", "John", "Mary", "Richard", "Molly", "Emily", "David", "Travis", "Caroline" };
 
         //Make a random number generator for testing later
         Random rand = new Random();
 
         //Request passengers for each of the flights
-        AA4006.RequestPassengers(AA4006.currentAirport);
-        UL7762.RequestPassengers(UL7762.currentAirport);
-        DL811.RequestPassengers(DL811.currentAirport);
+        foreach (var plane in airplanes)
+        {
+            plane.RequestPassengers(plane.currentAirport);
+        }
 
         foreach (var plane in airplanes)
         {
@@ -99,15 +112,14 @@
             }
 
             //Try and land at the other airport we created
-            if (plane.currentAirport == DallasFtWorth)
+            if (plane.currentAirport == availableAirports[0])
             {
-                plane.LandPlane(Dayton);
+                plane.LandPlane(availableAirports[1]);
             }
             else
             {
-                plane.LandPlane(DallasFtWorth);
+                plane.LandPlane(availableAirports[0]);
             }
         }
-
     }
 }

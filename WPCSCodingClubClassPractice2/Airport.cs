@@ -49,6 +49,7 @@
         {
             p.ResetPassenger();
         }
+        plane.RefillSnacks();
     }
 
     //Land the plane at the airport if Ramps are available

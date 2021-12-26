@@ -8,7 +8,7 @@
     public string airline;
     public List<Passenger> passengers;
     public List<string> seatAssignments; //A List object containing strings
-    private int snacks;
+    private int snacks { get; set; }
     private string[] drinkList = new string[] {"Coke", "Pepsi", "Sprite", "Dr. Pepper", "7-up", "Water", "Coffee"};
     public Airport currentAirport;
 
@@ -181,7 +181,7 @@
     //Refill snacks for the next flight!
     public void RefillSnacks()
     {
-        this.snacks = new Random().Next(seats);
+        this.snacks = this.seats / 2;
         Console.WriteLine("Refilled Snacks with a random amount!");
     }
 
